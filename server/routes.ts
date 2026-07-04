@@ -94,6 +94,13 @@ router.post('/auth/register', (req: Request, res: Response) => {
       VALUES (?, ?, ?)
     `).run(token, userId, expiresAt);
 
+    // Claim any orphaned/pre-auth trips (like the default Istanbul and Kyoto templates) for the newly registered user
+    try {
+      db.prepare('UPDATE trips SET user_id = ? WHERE user_id IS NULL').run(userId);
+    } catch (err) {
+      console.error('Error claiming orphaned trips during registration:', err);
+    }
+
     res.status(201).json({
       token,
       user: {
@@ -127,6 +134,13 @@ router.post('/auth/login', (req: Request, res: Response) => {
       INSERT INTO sessions (token, user_id, expires_at)
       VALUES (?, ?, ?)
     `).run(token, user.id, expiresAt);
+
+    // Claim any orphaned/pre-auth trips (like the default Istanbul and Kyoto templates) for the logged-in user
+    try {
+      db.prepare('UPDATE trips SET user_id = ? WHERE user_id IS NULL').run(user.id);
+    } catch (err) {
+      console.error('Error claiming orphaned trips during login:', err);
+    }
 
     res.json({
       token,
