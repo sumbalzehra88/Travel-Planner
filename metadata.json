@@ -1,0 +1,6 @@
+{
+  "name": "Travel Planner",
+  "description": "A single-page full-stack travel planner with itinerary builders, budget tracking, and persistent SQLite storage.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
