@@ -54,6 +54,65 @@ function authenticate(req: AuthenticatedRequest, res: Response, next: NextFuncti
   }
 }
 
+function cloneDefaultTemplates(userId: any) {
+  try {
+    // Check if this user already has any trips. If they do, don't clone anything.
+    const existingCount = db.prepare('SELECT COUNT(*) as count FROM trips WHERE user_id = ?').get(userId) as any;
+    if (existingCount && existingCount.count > 0) {
+      return;
+    }
+
+    // Clone templates (IDs 1 and 3 are the original pre-seeded templates for Istanbul and Kyoto)
+    const templateIds = [1, 3];
+    for (const tId of templateIds) {
+      const trip = db.prepare('SELECT * FROM trips WHERE id = ?').get(tId) as any;
+      if (trip) {
+        const result = db.prepare(`
+          INSERT INTO trips (
+            name, destination, start_date, end_date, user_id, 
+            theme_headline, theme_tagline, theme_color_bg, 
+            theme_color_accent, theme_site_name, theme_trivia
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).run(
+          trip.name,
+          trip.destination,
+          trip.start_date,
+          trip.end_date,
+          userId,
+          trip.theme_headline,
+          trip.theme_tagline,
+          trip.theme_color_bg,
+          trip.theme_color_accent,
+          trip.theme_site_name,
+          trip.theme_trivia
+        );
+
+        const newTripId = result.lastInsertRowid;
+
+        // Clone associated itineraries
+        const itineraries = db.prepare('SELECT * FROM itineraries WHERE trip_id = ?').all(tId) as any[];
+        for (const item of itineraries) {
+          db.prepare(`
+            INSERT INTO itineraries (trip_id, day_index, time, activity, notes)
+            VALUES (?, ?, ?, ?, ?)
+          `).run(newTripId, item.day_index, item.time, item.activity, item.notes);
+        }
+
+        // Clone associated expenses
+        const expenses = db.prepare('SELECT * FROM expenses WHERE trip_id = ?').all(tId) as any[];
+        for (const exp of expenses) {
+          db.prepare(`
+            INSERT INTO expenses (trip_id, description, amount, category, date)
+            VALUES (?, ?, ?, ?, ?)
+          `).run(newTripId, exp.description, exp.amount, exp.category, exp.date);
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error cloning default templates for user:', userId, err);
+  }
+}
+
 // ==========================================
 // AUTHENTICATION ENDPOINTS
 // ==========================================
@@ -94,12 +153,8 @@ router.post('/auth/register', (req: Request, res: Response) => {
       VALUES (?, ?, ?)
     `).run(token, userId, expiresAt);
 
-    // Claim any orphaned/pre-auth trips (like the default Istanbul and Kyoto templates) for the newly registered user
-    try {
-      db.prepare('UPDATE trips SET user_id = ? WHERE user_id IS NULL').run(userId);
-    } catch (err) {
-      console.error('Error claiming orphaned trips during registration:', err);
-    }
+    // Seed default templates
+    cloneDefaultTemplates(userId);
 
     res.status(201).json({
       token,
@@ -135,12 +190,8 @@ router.post('/auth/login', (req: Request, res: Response) => {
       VALUES (?, ?, ?)
     `).run(token, user.id, expiresAt);
 
-    // Claim any orphaned/pre-auth trips (like the default Istanbul and Kyoto templates) for the logged-in user
-    try {
-      db.prepare('UPDATE trips SET user_id = ? WHERE user_id IS NULL').run(user.id);
-    } catch (err) {
-      console.error('Error claiming orphaned trips during login:', err);
-    }
+    // If the logged-in user doesn't have any trips, clone templates for them as well
+    cloneDefaultTemplates(user.id);
 
     res.json({
       token,

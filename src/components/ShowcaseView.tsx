@@ -40,8 +40,8 @@ const DESTINATIONS: Destination[] = [
     name: 'Istanbul',
     country: 'Turkey',
     tagline: 'Where East Meets Timeless Beauty',
-    heroImage: '/src/assets/images/istanbul_hero_1783185711623.jpg',
-    detailImage: '/src/assets/images/istanbul_detail_1783185730368.jpg',
+    heroImage: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=1200&auto=format&fit=crop',
+    detailImage: 'https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=1200&auto=format&fit=crop',
     description: 'Istanbul is a magical metropolis straddling Europe and Asia across the Bosphorus Strait. Its Old City reflects the cultural influences of the many empires that once ruled here. Witness the iconic Blue Mosque, Hagia Sophia, and the bustling grand bazaars.',
     quickFacts: {
       continent: 'Europe & Asia',
