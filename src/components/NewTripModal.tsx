@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, Calendar, MapPin, Sparkles, X, Compass, Globe, Info, Bookmark, Map } from 'lucide-react';
+import { AlertCircle, Calendar, MapPin, Sparkles, X, Navigation, Globe, Info, Bookmark, Map } from 'lucide-react';
 import { ItineraryItem, ExpenseItem } from '../types';
 
 interface NewTripModalProps {
@@ -264,7 +264,7 @@ export default function NewTripModal({ isOpen, onClose, onSubmit, defaultDestina
         {/* Header */}
         <div className="flex justify-between items-center px-8 py-5 border-b border-[#EFE9E2]/60 bg-white">
           <div className="flex items-center gap-2.5">
-            <Compass 
+            <Navigation 
               size={20} 
               style={{ 
                 color: activePreset !== 'custom' && presets[activePreset]

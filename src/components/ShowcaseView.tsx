@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Compass, Heart, ArrowRight, Menu, X, ArrowLeft, Search, MapPin, Sparkles, Globe, Calendar, DollarSign, BookOpen } from 'lucide-react';
+import { Navigation, Heart, ArrowRight, Menu, X, ArrowLeft, Search, MapPin, Sparkles, Globe, Calendar, DollarSign, BookOpen, Instagram, Twitter, Mail, Landmark, Coffee, Ship, Trees, Map, Sun } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { User } from '../types';
 
@@ -51,9 +51,9 @@ const DESTINATIONS: Destination[] = [
       specialty: 'Turkish Tea & Baklava'
     },
     experiences: [
-      { title: 'Historic Landmarks', category: 'Culture', icon: '🕌', description: 'Explore the architectural marvels of Hagia Sophia and the Blue Mosque.' },
-      { title: 'Local Flavors', category: 'Gastronomy', icon: '🍵', description: 'Sip hot Turkish tea from a traditional tulip glass in the Grand Bazaar.' },
-      { title: 'Bosphorus Cruise', category: 'Adventure', icon: '🚢', description: 'Take a scenic boat tour separating the two legendary continents.' }
+      { title: 'Historic Landmarks', category: 'Culture', icon: 'landmark', description: 'Explore the architectural marvels of Hagia Sophia and the Blue Mosque.' },
+      { title: 'Local Flavors', category: 'Gastronomy', icon: 'coffee', description: 'Sip hot Turkish tea from a traditional tulip glass in the Grand Bazaar.' },
+      { title: 'Bosphorus Cruise', category: 'Adventure', icon: 'ship', description: 'Take a scenic boat tour separating the two legendary continents.' }
     ]
   },
   {
@@ -72,9 +72,9 @@ const DESTINATIONS: Destination[] = [
       specialty: 'Matcha Tea & Kaiseki Dining'
     },
     experiences: [
-      { title: 'Bamboo Forest', category: 'Nature', icon: '🎋', description: 'Walk through the towering green stalks of Arashiyama.' },
-      { title: 'Gion Geisha Tour', category: 'Heritage', icon: '🌸', description: 'Stroll along historic streets and observe traditional tea houses.' },
-      { title: 'Golden Pavilion', category: 'Spirituality', icon: '⛩️', description: 'Admire the stunning Kinkaku-ji temple reflecting over its mirror pond.' }
+      { title: 'Bamboo Forest', category: 'Nature', icon: 'trees', description: 'Walk through the towering green stalks of Arashiyama.' },
+      { title: 'Gion Geisha Tour', category: 'Heritage', icon: 'sparkles', description: 'Stroll along historic streets and observe traditional tea houses.' },
+      { title: 'Golden Pavilion', category: 'Spirituality', icon: 'map', description: 'Admire the stunning Kinkaku-ji temple reflecting over its mirror pond.' }
     ]
   },
   {
@@ -93,12 +93,26 @@ const DESTINATIONS: Destination[] = [
       specialty: 'Limoncello & Fresh Seafood'
     },
     experiences: [
-      { title: 'Path of the Gods', category: 'Hiking', icon: '🥾', description: 'Hike along soaring trails offering infinite ocean views.' },
-      { title: 'Positano Cliffside', category: 'Leisure', icon: '🏖️', description: 'Relax on volcanic sands surrounded by vertical pastel architecture.' },
-      { title: 'Lemon Groves', category: 'Agritourism', icon: '🍋', description: 'Taste fresh hand-crafted limoncello in a sun-drenched orchard.' }
+      { title: 'Path of the Gods', category: 'Hiking', icon: 'map', description: 'Hike along soaring trails offering infinite ocean views.' },
+      { title: 'Positano Cliffside', category: 'Leisure', icon: 'sun', description: 'Relax on volcanic sands surrounded by vertical pastel architecture.' },
+      { title: 'Lemon Groves', category: 'Agritourism', icon: 'sparkles', description: 'Taste fresh hand-crafted limoncello in a sun-drenched orchard.' }
     ]
   }
 ];
+
+export const getExperienceIcon = (iconName: string) => {
+  switch (iconName) {
+    case 'landmark': return <Landmark size={18} className="text-[#7A2E3A]" />;
+    case 'coffee': return <Coffee size={18} className="text-[#7A2E3A]" />;
+    case 'ship': return <Ship size={18} className="text-[#7A2E3A]" />;
+    case 'trees': return <Trees size={18} className="text-[#7A2E3A]" />;
+    case 'sparkles': return <Sparkles size={18} className="text-[#7A2E3A]" />;
+    case 'map': return <Map size={18} className="text-[#7A2E3A]" />;
+    case 'sun': return <Sun size={18} className="text-[#7A2E3A]" />;
+    default: return <MapPin size={18} className="text-[#7A2E3A]" />;
+  }
+};
+
 
 export default function ShowcaseView({ 
   onSwitchToPlanner, 
@@ -163,7 +177,7 @@ export default function ShowcaseView({
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentTab('home')}>
             <div className="w-10 h-10 rounded-full bg-[#7A2E3A] flex items-center justify-center text-white shadow-md">
-              <Compass size={20} className="animate-spin-slow" />
+              <Navigation size={18} />
             </div>
             <span className="font-serif italic font-extrabold text-[#7A2E3A] text-lg md:text-xl tracking-tight">WanderSync</span>
           </div>
@@ -243,7 +257,7 @@ export default function ShowcaseView({
               <div>
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-2">
-                    <Compass size={18} className="text-[#7A2E3A]" />
+                    <Navigation size={18} className="text-[#7A2E3A]" />
                     <span className="font-serif italic font-extrabold text-[#7A2E3A] text-md">WanderSync</span>
                   </div>
                   <button 
@@ -428,51 +442,130 @@ export default function ShowcaseView({
             </section>
 
             {/* "EXPLORE EXPERIENCES" GRID */}
-            <section id="experiences" className="px-4 md:px-8 py-16 bg-[#FAF5F0] max-w-7xl mx-auto space-y-10">
+            <section id="experiences" className="px-4 md:px-8 pt-16 pb-12 bg-[#FAF5F0] max-w-7xl mx-auto space-y-12">
               <div className="text-center space-y-2">
                 <span className="text-[10px] font-bold text-[#7A2E3A] uppercase tracking-widest block">Dynamic Activities</span>
                 <h2 className="text-3xl md:text-4xl font-serif text-[#7A2E3A]">Vibrant Experiences</h2>
                 <div className="w-12 h-1 bg-[#7A2E3A] mx-auto rounded-full mt-2" />
               </div>
 
-              {/* Icon-card Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="bg-white/80 p-6 rounded-[24px] border border-[#EFE9E2] flex gap-4 items-start shadow-xs hover:shadow-md transition-shadow">
-                  <div className="w-12 h-12 rounded-2xl bg-[#E8C4B8]/40 flex items-center justify-center text-2xl flex-shrink-0">
-                    🕌
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-serif text-slate-800 font-bold text-sm">Landmarks & History</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Immerse yourself in legendary basilicas, historic mosques, temples, and timeless castle architectures.
-                    </p>
-                  </div>
-                </div>
+              {/* Animated Experience Grid */}
+              <motion.div 
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.15
+                    }
+                  }
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              >
+                {[
+                  {
+                    title: 'Landmarks & History',
+                    icon: 'landmark',
+                    description: 'Immerse yourself in legendary basilicas, historic mosques, temples, and timeless castle architectures.',
+                    image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?q=80&w=600&auto=format&fit=crop',
+                  },
+                  {
+                    title: 'Local Delicacies',
+                    icon: 'coffee',
+                    description: 'Savor aromatic teas, delicious pastries, authentic spice markets, and local culinary masterpieces.',
+                    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600&auto=format&fit=crop',
+                  },
+                  {
+                    title: 'Scenic Cruises & Views',
+                    icon: 'ship',
+                    description: 'Ride ferry yachts separating majestic continents, walk cliff paths, and witness dreamlike scenic sunsets.',
+                    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop',
+                  },
+                  {
+                    title: 'Nature & Wilderness',
+                    icon: 'trees',
+                    description: 'Hike pristine alpine trails, wander through lush bamboo forests, and connect with untouched green reserves.',
+                    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=600&auto=format&fit=crop',
+                  }
+                ].map((exp, idx) => (
+                  <motion.div
+                    key={idx}
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 100, damping: 15 } }
+                    }}
+                    whileHover={{ 
+                      y: -4, 
+                      boxShadow: "0 12px 30px -5px rgba(122, 46, 58, 0.12), 0 8px 10px -6px rgba(122, 46, 58, 0.12)" 
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="group bg-white/95 rounded-[24px] border border-[#EFE9E2] border-t-4 border-t-[#7A2E3A] p-6 pb-7 flex flex-col justify-between h-full shadow-xs transition-shadow overflow-hidden text-left"
+                  >
+                    <div className="space-y-4">
+                      {/* Image Thumbnail with Overlay Badge */}
+                      <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 border border-[#EFE9E2]/50">
+                        <img 
+                          src={exp.image} 
+                          alt={exp.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs w-10 h-10 rounded-full flex items-center justify-center shadow-md border border-white/20">
+                          {getExperienceIcon(exp.icon)}
+                        </div>
+                      </div>
 
-                <div className="bg-white/80 p-6 rounded-[24px] border border-[#EFE9E2] flex gap-4 items-start shadow-xs hover:shadow-md transition-shadow">
-                  <div className="w-12 h-12 rounded-2xl bg-[#E8C4B8]/40 flex items-center justify-center text-2xl flex-shrink-0">
-                    🍵
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-serif text-slate-800 font-bold text-sm">Local Delicacies</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Savor aromatic teas, delicious pastries, authentic spice markets, and local culinary masterpieces.
-                    </p>
-                  </div>
-                </div>
+                      {/* Content */}
+                      <div className="space-y-1.5">
+                        <h4 className="font-serif text-slate-800 font-bold text-base leading-tight">
+                          {exp.title}
+                        </h4>
+                        <p className="text-xs text-slate-500 leading-snug">
+                          {exp.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
 
-                <div className="bg-white/80 p-6 rounded-[24px] border border-[#EFE9E2] flex gap-4 items-start shadow-xs hover:shadow-md transition-shadow">
-                  <div className="w-12 h-12 rounded-2xl bg-[#E8C4B8]/40 flex items-center justify-center text-2xl flex-shrink-0">
-                    🚢
-                  </div>
-                  <div className="space-y-1">
-                    <h4 className="font-serif text-slate-800 font-bold text-sm">Scenic Cruises & Views</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">
-                      Ride ferry yachts separating majestic continents, walk cliff paths, and witness dreamlike scenic sunsets.
+              {/* SPACING RESOLUTION: TRANSITIONAL CTA BANNER */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="pt-6"
+              >
+                <div className="relative rounded-[32px] overflow-hidden bg-gradient-to-br from-[#7A2E3A] via-[#8D3B23] to-[#5C222B] p-8 md:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 border border-white/10 text-left">
+                  {/* Subtle Background Pattern Elements */}
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#FAF5F0_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
+                  
+                  <div className="space-y-3 max-w-xl text-center md:text-left relative z-10">
+                    <span className="text-[10px] font-bold text-[#E8C4B8] tracking-widest uppercase block">Ready to Begin?</span>
+                    <h3 className="text-2xl md:text-3xl font-serif leading-tight">
+                      Plan Your Next Masterpiece Voyage
+                    </h3>
+                    <p className="text-xs text-[#FAF5F0]/85 leading-relaxed font-sans max-w-lg">
+                      Sync your custom itineraries, log day-by-day activities, and track dynamic budget meters perfectly across the integrated SQLite cloud sandbox.
                     </p>
                   </div>
+
+                  <div className="relative z-10 flex-shrink-0">
+                    <motion.button
+                      onClick={onSwitchToPlanner}
+                      whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)" }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-[#FAF5F0] text-[#7A2E3A] font-bold text-xs md:text-sm px-7 py-3.5 rounded-full shadow-lg hover:bg-white transition-all flex items-center gap-2 cursor-pointer"
+                    >
+                      <Sparkles size={14} className="text-[#7A2E3A]" />
+                      <span>Enter Planning Workspace</span>
+                    </motion.button>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </section>
 
           </div>
@@ -558,7 +651,7 @@ export default function ShowcaseView({
                           <div className="space-y-2">
                             <div className="flex items-center justify-between">
                               <span className="text-[9px] font-bold text-[#7A2E3A] uppercase tracking-wider bg-[#E8C4B8]/30 px-2.5 py-0.5 rounded-full">{exp.category}</span>
-                              <span className="text-xl">{exp.icon}</span>
+                              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#7A2E3A]/5">{getExperienceIcon(exp.icon)}</span>
                             </div>
                             <h4 className="font-serif font-bold text-slate-800 text-sm">{exp.title}</h4>
                             <p className="text-[11px] text-slate-500 leading-relaxed">{exp.description}</p>
@@ -615,56 +708,277 @@ export default function ShowcaseView({
         )}
 
         {/* FOOTER */}
-        <footer className="bg-[#FAF5F0] border-t border-[#EFE9E2] px-6 py-12 mt-16">
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-[#7A2E3A] flex items-center justify-center text-white">
-                  <Compass size={16} />
-                </div>
-                <span className="font-serif italic font-extrabold text-[#7A2E3A] text-md">WanderSync</span>
-              </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
+        <motion.footer 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: { opacity: 0, y: 45 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1],
+                staggerChildren: 0.12,
+                delayChildren: 0.1
+              }
+            }
+          }}
+          className="relative bg-gradient-to-b from-[#FAF5F0] via-[#F8ECE1] to-[#F5E2D3] border-t border-[#EFE9E2]/80 px-6 py-20 md:py-24 overflow-hidden mt-8"
+        >
+          {/* Subtle Background Topography/Dotted Pattern Decoration */}
+          <div 
+            className="absolute inset-0 opacity-[0.04] pointer-events-none" 
+            style={{ 
+              backgroundImage: 'radial-gradient(#7A2E3A 1.5px, transparent 1.5px)', 
+              backgroundSize: '20px 20px' 
+            }} 
+          />
+
+          <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 text-center sm:text-left relative z-10">
+            {/* Column 1 */}
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="flex flex-col items-center sm:items-start space-y-4"
+            >
+              <motion.div 
+                whileHover="logoHover"
+                className="flex items-center gap-3 cursor-pointer group"
+                onClick={() => { setCurrentTab('home'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+              >
+                <motion.div 
+                  variants={{
+                    logoHover: { 
+                      scale: 1.1,
+                      boxShadow: "0 0 25px rgba(122, 46, 58, 0.45)",
+                      rotate: 15
+                    }
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="w-11 h-11 rounded-full bg-[#7A2E3A] flex items-center justify-center text-white shadow-lg border border-[#7A2E3A]/20 relative"
+                >
+                  <div className="absolute inset-0 rounded-full bg-[#7A2E3A] blur-xs opacity-50 group-hover:opacity-100 transition-opacity" />
+                  <Navigation size={20} className="relative z-10 text-white" />
+                </motion.div>
+                <span className="font-serif italic font-extrabold text-[#7A2E3A] text-xl tracking-tight leading-none self-center">WanderSync</span>
+              </motion.div>
+              <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs">
                 Seamlessly blending aesthetic travel showcases with a full-featured planning workspace, structured itineraries, and real-time budget metric trackers.
               </p>
-            </div>
+            </motion.div>
 
-            <div>
-              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider mb-4">Voyages</h5>
-              <ul className="space-y-2 text-xs text-slate-500">
-                <li><button onClick={() => handleSelectDestination('istanbul')} className="hover:text-[#7A2E3A]">Istanbul, Turkey</button></li>
-                <li><button onClick={() => handleSelectDestination('kyoto')} className="hover:text-[#7A2E3A]">Kyoto, Japan</button></li>
-                <li><button onClick={() => handleSelectDestination('amalfi')} className="hover:text-[#7A2E3A]">Amalfi Coast, Italy</button></li>
+            {/* Column 2 */}
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="flex flex-col items-center sm:items-start space-y-4"
+            >
+              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider">Voyages</h5>
+              <ul className="space-y-3 flex flex-col items-center sm:items-start">
+                {[
+                  { label: 'Istanbul, Turkey', action: () => handleSelectDestination('istanbul') },
+                  { label: 'Kyoto, Japan', action: () => handleSelectDestination('kyoto') },
+                  { label: 'Amalfi Coast, Italy', action: () => handleSelectDestination('amalfi') },
+                ].map((link, idx) => (
+                  <li key={idx}>
+                    <motion.button 
+                      onClick={link.action} 
+                      whileHover="hover"
+                      initial="initial"
+                      className="text-xs text-slate-500 hover:text-[#7A2E3A] font-semibold flex items-center transition-colors group cursor-pointer"
+                    >
+                      <motion.span
+                        variants={{
+                          initial: { x: -6, opacity: 0, width: 0 },
+                          hover: { x: 0, opacity: 1, width: 'auto', transition: { duration: 0.2 } }
+                        }}
+                        className="inline-flex items-center mr-1.5"
+                      >
+                        <ArrowRight size={11} className="text-[#7A2E3A]" />
+                      </motion.span>
+                      <motion.span
+                        variants={{
+                          initial: { x: 0 },
+                          hover: { x: 2 }
+                        }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        {link.label}
+                      </motion.span>
+                    </motion.button>
+                  </li>
+                ))}
               </ul>
-            </div>
+            </motion.div>
 
-            <div>
-              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider mb-4">Workspace</h5>
-              <ul className="space-y-2 text-xs text-slate-500">
-                <li><button onClick={onSwitchToPlanner} className="hover:text-[#7A2E3A] flex items-center gap-1"><span>Interactive Planners</span> <span className="bg-[#E8C4B8]/50 px-1.5 py-0.5 rounded text-[8px] text-[#7A2E3A] uppercase font-bold">SQLite</span></button></li>
-                <li><button onClick={onSwitchToPlanner} className="hover:text-[#7A2E3A]">Daily Calendars</button></li>
-                <li><button onClick={onSwitchToPlanner} className="hover:text-[#7A2E3A]">Expense Tracking Meters</button></li>
+            {/* Column 3 */}
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="flex flex-col items-center sm:items-start space-y-4"
+            >
+              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider">Workspace</h5>
+              <ul className="space-y-3 flex flex-col items-center sm:items-start">
+                <li>
+                  <motion.button 
+                    onClick={onSwitchToPlanner} 
+                    whileHover="hover"
+                    initial="initial"
+                    className="text-xs text-slate-500 hover:text-[#7A2E3A] font-semibold flex items-center transition-colors group cursor-pointer text-left"
+                  >
+                    <motion.span
+                      variants={{
+                        initial: { x: -6, opacity: 0, width: 0 },
+                        hover: { x: 0, opacity: 1, width: 'auto', transition: { duration: 0.2 } }
+                      }}
+                      className="inline-flex items-center mr-1.5"
+                    >
+                      <ArrowRight size={11} className="text-[#7A2E3A]" />
+                    </motion.span>
+                    <motion.span
+                      variants={{
+                        initial: { x: 0 },
+                        hover: { x: 2 }
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      Interactive Planners
+                    </motion.span>
+                  </motion.button>
+                </li>
+                <li>
+                  <motion.button 
+                    onClick={onSwitchToPlanner} 
+                    whileHover="hover"
+                    initial="initial"
+                    className="text-xs text-slate-500 hover:text-[#7A2E3A] font-semibold flex items-center transition-colors group cursor-pointer text-left"
+                  >
+                    <motion.span
+                      variants={{
+                        initial: { x: -6, opacity: 0, width: 0 },
+                        hover: { x: 0, opacity: 1, width: 'auto', transition: { duration: 0.2 } }
+                      }}
+                      className="inline-flex items-center mr-1.5"
+                    >
+                      <ArrowRight size={11} className="text-[#7A2E3A]" />
+                    </motion.span>
+                    <motion.span
+                      variants={{
+                        initial: { x: 0 },
+                        hover: { x: 2 }
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      Daily Calendars
+                    </motion.span>
+                  </motion.button>
+                </li>
+                <li>
+                  <motion.button 
+                    onClick={onSwitchToPlanner} 
+                    whileHover="hover"
+                    initial="initial"
+                    className="text-xs text-slate-500 hover:text-[#7A2E3A] font-semibold flex items-center transition-colors group cursor-pointer text-left"
+                  >
+                    <motion.span
+                      variants={{
+                        initial: { x: -6, opacity: 0, width: 0 },
+                        hover: { x: 0, opacity: 1, width: 'auto', transition: { duration: 0.2 } }
+                      }}
+                      className="inline-flex items-center mr-1.5"
+                    >
+                      <ArrowRight size={11} className="text-[#7A2E3A]" />
+                    </motion.span>
+                    <motion.span
+                      variants={{
+                        initial: { x: 0 },
+                        hover: { x: 2 }
+                      }}
+                      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    >
+                      Expense Tracking Meters
+                    </motion.span>
+                  </motion.button>
+                </li>
               </ul>
-            </div>
+            </motion.div>
 
-            <div>
-              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider mb-4">WanderSync App</h5>
-              <p className="text-[11px] text-slate-500 mb-4 leading-relaxed">
-                Connect and sync all itineraries directly inside your sandboxed secure database.
+            {/* Column 4 */}
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+              }}
+              className="flex flex-col items-center sm:items-start space-y-4"
+            >
+              <h5 className="font-serif text-xs font-bold text-[#7A2E3A] uppercase tracking-wider">WanderSync App</h5>
+              <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs">
+                Connect and sync all itineraries directly inside your personal travel companion.
               </p>
-              <div className="flex gap-2 justify-start">
-                <button onClick={onSwitchToPlanner} className="bg-[#7A2E3A] text-white font-semibold text-[10px] px-4 py-2 rounded-full hover:opacity-90 active:scale-95 transition-all">
-                  Open Application Workspace
-                </button>
+              
+              <div className="flex justify-center sm:justify-start w-full">
+                <motion.button 
+                  onClick={onSwitchToPlanner} 
+                  whileHover="btnHover"
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  className="bg-[#7A2E3A] text-white font-semibold text-[10px] px-5 py-3 rounded-full shadow-md hover:bg-[#60202B] transition-colors cursor-pointer flex items-center gap-2 relative overflow-hidden"
+                >
+                  <motion.div
+                    variants={{
+                      btnHover: { rotate: 20, scale: 1.1 }
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                  >
+                    <Sparkles size={12} />
+                  </motion.div>
+                  <span>Open Application Workspace</span>
+                </motion.button>
               </div>
-            </div>
+
+              {/* Social Connections */}
+              <div className="pt-4 border-t border-[#EFE9E2]/60 w-full">
+                <p className="text-[10px] font-bold text-[#7A2E3A] uppercase tracking-wider mb-2.5">Connect With Us</p>
+                <div className="flex gap-2.5 justify-center sm:justify-start">
+                  {[
+                    { icon: <Instagram size={14} />, href: "#", label: "Instagram" },
+                    { icon: <Twitter size={14} />, href: "#", label: "Twitter" },
+                    { icon: <Mail size={14} />, href: "mailto:support@wandersync.com", label: "Email" }
+                  ].map((social, sIdx) => (
+                    <motion.a
+                      key={sIdx}
+                      href={social.href}
+                      whileHover={{ scale: 1.1, backgroundColor: "#7A2E3A", color: "#FFFFFF", borderColor: "#7A2E3A" }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-8 h-8 rounded-full border border-[#EFE9E2]/80 bg-[#FAF5F0]/50 text-slate-500 hover:text-white flex items-center justify-center hover:shadow-sm transition-all cursor-pointer"
+                      title={social.label}
+                    >
+                      {social.icon}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="max-w-7xl mx-auto border-t border-[#EFE9E2] mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-slate-400 gap-4">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 15 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+            }}
+            className="max-w-7xl mx-auto border-t border-[#EFE9E2] mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center text-[10px] text-slate-400 gap-4 text-center sm:text-left relative z-10"
+          >
             <p>© 2026 WanderSync Inc. All Rights Reserved.</p>
-            <p className="font-mono">City, Country Format Standard Verification Passed</p>
-          </div>
-        </footer>
+          </motion.div>
+        </motion.footer>
 
       </div>
     </div>

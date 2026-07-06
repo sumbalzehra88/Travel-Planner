@@ -169,14 +169,14 @@ export default function BudgetTracker({
             </p>
           </div>
           <div className="pt-6 border-t border-white/20 mt-6 flex justify-between items-center">
-            <span className="text-[10px] text-white/80 font-bold uppercase tracking-wider">Active Trip Tracker</span>
+            <span className="text-[10px] text-white/95 font-extrabold uppercase tracking-wider">Active Trip Tracker</span>
             {!isAdding && !editingItem && (
               <button
                 id="add-expense-trigger"
                 onClick={handleStartAdd}
-                className="bg-white/15 hover:bg-white/25 border border-white/20 px-3.5 py-2 rounded-xl text-[10px] font-bold uppercase tracking-wider transition-all flex items-center gap-1 active:scale-[0.98] cursor-pointer"
+                className="bg-white hover:bg-[#FAF1EC] text-slate-900 border border-white px-4 py-2.5 rounded-xl text-[10px] font-extrabold uppercase tracking-wider transition-all flex items-center gap-1.5 active:scale-[0.98] cursor-pointer shadow-sm"
               >
-                <Plus size={12} />
+                <Plus size={12} className="stroke-[3px]" />
                 Add Expense
               </button>
             )}
@@ -234,10 +234,10 @@ export default function BudgetTracker({
           </div>
 
           {trip.expenses.length === 0 ? (
-            <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-8 text-center">
+            <div className="bg-[#FAF1EC]/30 border border-[#EFE9E2] rounded-2xl p-8 text-center shadow-2xs">
               <span className="text-3xl block mb-2">💸</span>
-              <p className="text-sm font-semibold text-slate-800">No expenses recorded yet</p>
-              <p className="text-xs text-slate-400 mt-1">Start tracking your budget. Click "Add Expense" to save a transaction.</p>
+              <p className="text-sm font-extrabold text-slate-900">No expenses recorded yet</p>
+              <p className="text-xs text-slate-700 font-bold mt-1">Start tracking your budget. Click "Add Expense" to save a transaction.</p>
             </div>
           ) : (
             <div className="border border-[#EFE9E2] bg-white rounded-2xl overflow-hidden shadow-xs">
@@ -248,21 +248,21 @@ export default function BudgetTracker({
                     <div
                       key={item.id}
                       id={`expense-row-${item.id}`}
-                      className="group flex justify-between items-center p-4 hover:bg-slate-50/50 transition-colors"
+                      className="group flex justify-between items-center p-4 hover:bg-[#FAF1EC]/30 transition-colors duration-200"
                     >
                       {/* Left: Description + Category/Date */}
                       <div className="space-y-1 pr-4">
-                        <h4 className="font-semibold text-sm text-slate-950 leading-tight">
+                        <h4 className="font-serif italic font-bold text-sm text-slate-950 leading-tight">
                           {item.description}
                         </h4>
-                        <div className="flex flex-wrap items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2 mt-1.5">
                           <span
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${styles.bg} ${styles.text}`}
+                            className={`px-2.5 py-0.5 rounded-full text-[9px] font-extrabold uppercase tracking-wider border ${styles.bg} ${styles.text}`}
                           >
                             {item.category}
                           </span>
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1">
-                            <Calendar size={10} />
+                          <span className="text-[10px] text-slate-700 font-bold flex items-center gap-1">
+                            <Calendar size={10} className="text-[#7A2E3A]" />
                             {formatDate(item.date)}
                           </span>
                         </div>
@@ -447,15 +447,23 @@ export default function BudgetTracker({
             </div>
           ) : (
             <div 
-              className="border rounded-2xl p-5 text-center transition-all duration-300"
+              className="border rounded-[1.8rem] p-6 text-center transition-all duration-300 relative overflow-hidden shadow-sm flex flex-col items-center justify-center min-h-[220px]"
               style={{
-                backgroundColor: themeAccentLight,
-                borderColor: themeAccentBorder
+                background: `linear-gradient(135deg, ${themeBg}, ${themeAccentLight}50)`,
+                borderColor: themeAccent,
+                borderWidth: '1.5px',
+                boxShadow: `0 4px 20px -3px ${themeAccent}10`
               }}
             >
-              <Target size={24} className="mx-auto mb-2.5" style={{ color: themeAccent }} />
-              <h4 className="font-bold text-[10px] text-slate-800 uppercase tracking-wider mb-1 font-sans">Financial Ledger</h4>
-              <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs mx-auto">
+              {/* Ambient decoration glow */}
+              <div 
+                className="absolute -right-12 -bottom-12 w-24 h-24 rounded-full blur-2xl opacity-15 pointer-events-none" 
+                style={{ backgroundColor: themeAccent }}
+              />
+
+              <Target size={40} className="mb-4 text-[#7A2E3A]" style={{ color: themeAccent }} />
+              <h4 className="font-serif italic font-extrabold text-sm text-slate-900 tracking-tight mb-2">Financial Ledger</h4>
+              <p className="text-xs text-slate-700 font-semibold leading-relaxed max-w-xs mx-auto">
                 Log travel expenses for transportation, accommodation, meals, or leisure to see running real-time totals and budget category bar breakdowns.
               </p>
             </div>

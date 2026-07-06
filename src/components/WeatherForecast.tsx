@@ -62,16 +62,16 @@ export default function WeatherForecast({
   // Map Open-Meteo weather codes to Lucide icons and descriptive strings
   const getWeatherDetails = (code: number) => {
     // Reference: https://open-meteo.com/en/docs
-    if (code === 0) return { icon: <Sun className="w-5 h-5" />, label: 'Clear Sky', color: 'text-amber-500' };
-    if (code === 1 || code === 2 || code === 3) return { icon: <CloudSun className="w-5 h-5" />, label: 'Partly Cloudy', color: 'text-sky-500' };
-    if (code === 45 || code === 48) return { icon: <CloudFog className="w-5 h-5" />, label: 'Foggy Weather', color: 'text-slate-400' };
-    if (code >= 51 && code <= 57) return { icon: <CloudDrizzle className="w-5 h-5" />, label: 'Light Drizzle', color: 'text-blue-400' };
-    if (code >= 61 && code <= 67) return { icon: <CloudRain className="w-5 h-5" />, label: 'Rainy Showers', color: 'text-blue-500' };
-    if (code >= 71 && code <= 77) return { icon: <CloudSnow className="w-5 h-5" />, label: 'Snowfall', color: 'text-indigo-300' };
-    if (code >= 80 && code <= 82) return { icon: <CloudRain className="w-5 h-5" />, label: 'Heavy Showers', color: 'text-blue-600' };
-    if (code === 85 || code === 86) return { icon: <CloudSnow className="w-5 h-5" />, label: 'Snow Showers', color: 'text-indigo-400' };
-    if (code >= 95 && code <= 99) return { icon: <CloudLightning className="w-5 h-5" />, label: 'Thunderstorms', color: 'text-amber-600' };
-    return { icon: <Cloud className="w-5 h-5" />, label: 'Cloudy', color: 'text-slate-500' };
+    if (code === 0) return { icon: <Sun className="w-5 h-5" />, label: 'Clear Sky', color: 'text-amber-500', colorHex: '#F59E0B' };
+    if (code === 1 || code === 2 || code === 3) return { icon: <CloudSun className="w-5 h-5" />, label: 'Partly Cloudy', color: 'text-sky-500', colorHex: '#0EA5E9' };
+    if (code === 45 || code === 48) return { icon: <CloudFog className="w-5 h-5" />, label: 'Foggy Weather', color: 'text-slate-400', colorHex: '#94A3B8' };
+    if (code >= 51 && code <= 57) return { icon: <CloudDrizzle className="w-5 h-5" />, label: 'Light Drizzle', color: 'text-blue-400', colorHex: '#60A5FA' };
+    if (code >= 61 && code <= 67) return { icon: <CloudRain className="w-5 h-5" />, label: 'Rainy Showers', color: 'text-blue-500', colorHex: '#3B82F6' };
+    if (code >= 71 && code <= 77) return { icon: <CloudSnow className="w-5 h-5" />, label: 'Snowfall', color: 'text-indigo-400', colorHex: '#818CF8' };
+    if (code >= 80 && code <= 82) return { icon: <CloudRain className="w-5 h-5" />, label: 'Heavy Showers', color: 'text-blue-600', colorHex: '#2563EB' };
+    if (code === 85 || code === 86) return { icon: <CloudSnow className="w-5 h-5" />, label: 'Snow Showers', color: 'text-indigo-500', colorHex: '#6366F1' };
+    if (code >= 95 && code <= 99) return { icon: <CloudLightning className="w-5 h-5" />, label: 'Thunderstorms', color: 'text-amber-600', colorHex: '#D97706' };
+    return { icon: <Cloud className="w-5 h-5" />, label: 'Cloudy', color: 'text-slate-500', colorHex: '#64748B' };
   };
 
   const fetchWeather = async () => {
@@ -205,34 +205,43 @@ export default function WeatherForecast({
   const activeDayDetails = activeDayForecast ? getWeatherDetails(activeDayForecast.weatherCode) : null;
 
   return (
-    <div className="bg-white border border-[#EFE9E2] rounded-[1.8rem] overflow-hidden shadow-xs font-sans">
-      <div className="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-[#EFE9E2]/60">
+    <div className="bg-gradient-to-br from-[#FCFAF8] to-[#FAF1EC] border border-[#EFE9E2] rounded-[1.8rem] overflow-hidden shadow-sm relative font-sans">
+      <div className="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-[#EFE9E2]/60 relative z-10">
         
         {/* Left Side: Destination Overview & Current Weather */}
         <div className="p-6 md:col-span-5 flex flex-col justify-between">
           <div>
             {/* Header: Destination Pin */}
-            <div className="flex items-center gap-1.5 text-slate-500">
+            <div className="flex items-center gap-1.5 text-slate-700">
               <MapPin size={12} style={{ color: themeAccent }} />
-              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Local Weather Overview</span>
+              <span className="text-[10px] font-extrabold uppercase tracking-wider">Local Weather Overview</span>
             </div>
             
-            <h3 className="font-serif italic font-bold text-slate-900 text-lg mt-1 tracking-tight">
+            <h3 className="font-serif italic font-bold text-slate-950 text-lg mt-1 tracking-tight">
               {weather.resolvedName}
             </h3>
             
             <div className="mt-4 flex items-center gap-4">
-              <div className="p-3 bg-slate-50 border border-[#EFE9E2]/40 rounded-2xl flex-shrink-0">
-                <span className={currentDetails.color}>
+              <div 
+                className="p-3 border rounded-2xl flex-shrink-0 shadow-2xs transition-all duration-300"
+                style={{
+                  backgroundColor: themeAccentLight,
+                  borderColor: themeAccentBorder,
+                }}
+              >
+                <span className={`${currentDetails.color} text-xl block scale-110`}>
                   {currentDetails.icon}
                 </span>
               </div>
               <div>
-                <div className="text-3xl font-bold font-mono tracking-tight text-slate-900 flex items-start">
+                <div 
+                  className="text-4xl font-black font-mono tracking-tight flex items-start leading-none"
+                  style={{ color: themeAccent }}
+                >
                   {weather.currentTemp}
-                  <span className="text-base font-medium text-slate-500 mt-1">°C</span>
+                  <span className="text-lg font-extrabold mt-0.5 ml-0.5 opacity-90">°C</span>
                 </div>
-                <div className="text-xs font-semibold text-slate-700 mt-0.5">
+                <div className="text-xs font-extrabold text-slate-800 mt-1">
                   {currentDetails.label}
                 </div>
               </div>
@@ -240,32 +249,31 @@ export default function WeatherForecast({
           </div>
 
           {/* Quick Metrics */}
-          <div className="mt-6 pt-4 border-t border-[#EFE9E2]/60 flex items-center gap-5 text-[10px] font-bold text-slate-500 font-mono">
+          <div className="mt-6 pt-4 border-t border-[#EFE9E2]/60 flex items-center gap-5 text-[10px] font-bold text-slate-700 font-mono">
             <div className="flex items-center gap-1">
-              <Thermometer size={12} className="text-slate-400" />
+              <Thermometer size={12} style={{ color: themeAccent }} />
               <span>CURRENT TEMP</span>
             </div>
             <div className="flex items-center gap-1">
-              <Wind size={12} className="text-slate-400" />
+              <Wind size={12} className="text-slate-500" />
               <span>{weather.currentWind} km/h WIND</span>
             </div>
           </div>
         </div>
 
         {/* Right Side: 7-Day Forecast or Trip Dates match */}
-        <div className="p-6 md:col-span-7 flex flex-col justify-between bg-[#FCFAF8]/60">
+        <div className="p-6 md:col-span-7 flex flex-col justify-between bg-white/40">
           <div>
             <div className="flex items-center justify-between mb-3.5">
-              <span className="text-[9px] font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <span className="text-[9px] font-extrabold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                 <CalendarDays size={11} style={{ color: themeAccent }} /> 7-Day Destination Forecast
               </span>
               {activeDayForecast && (
                 <span 
-                  className="px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider border"
+                  className="px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider border text-white shadow-2xs"
                   style={{
-                    backgroundColor: themeAccentLight,
-                    borderColor: themeAccentBorder,
-                    color: themeAccent
+                    backgroundColor: themeAccent,
+                    borderColor: themeAccent
                   }}
                 >
                   Day {activeDayIndex + 1} Selected
@@ -274,29 +282,44 @@ export default function WeatherForecast({
             </div>
 
             {/* Daily Scrollable List */}
-            <div className="space-y-2.5 max-h-[145px] overflow-y-auto pr-1">
-              {weather.daily.map((day) => {
+            <div className="space-y-2 max-h-[155px] overflow-y-auto pr-1">
+              {weather.daily.map((day, idx) => {
                 const dayDetails = getWeatherDetails(day.weatherCode);
                 const isSelectedDay = day.dateString === activeDayDateStr;
+
+                // Alternating row tints for background
+                const rowBgClass = isSelectedDay 
+                  ? 'bg-white shadow-xs' 
+                  : idx % 2 === 0 
+                    ? 'bg-[#FCFAF8]/90 hover:bg-[#FAF1EC]/50' 
+                    : 'bg-white/70 hover:bg-[#FAF1EC]/50';
+
+                // Left accent border styling
+                const itemStyle = isSelectedDay
+                  ? { 
+                      borderLeft: `4px solid ${themeAccent}`, 
+                      borderColor: `${themeAccentBorder} ${themeAccentBorder} ${themeAccentBorder} transparent` 
+                    }
+                  : { 
+                      borderLeft: `3.5px solid ${dayDetails.colorHex || '#CBD5E1'}`, 
+                      borderColor: '#EFE9E2/40' 
+                    };
+
                 return (
                   <div 
                     key={day.dateString}
-                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-all duration-300 ${
-                      isSelectedDay 
-                        ? 'bg-white shadow-xs' 
-                        : 'bg-transparent border-transparent'
-                    }`}
-                    style={isSelectedDay ? { borderColor: themeAccentBorder } : {}}
+                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl border transition-all duration-300 ${rowBgClass}`}
+                    style={itemStyle}
                   >
                     <div className="flex items-center gap-3">
                       <span className={`p-1 bg-white border border-[#EFE9E2]/40 rounded-lg shadow-2xs ${dayDetails.color}`}>
                         {dayDetails.icon}
                       </span>
                       <div>
-                        <div className="text-[11px] font-bold text-slate-800 leading-none">
+                        <div className="text-[11px] font-extrabold text-slate-900 leading-none">
                           {day.formattedDay}
                         </div>
-                        <div className="text-[10px] text-slate-400 mt-1 font-medium">
+                        <div className="text-[10px] text-slate-700 font-bold mt-1">
                           {dayDetails.label}
                         </div>
                       </div>
@@ -304,13 +327,13 @@ export default function WeatherForecast({
 
                     <div className="flex items-center gap-4 text-right">
                       {day.precipitation > 0 && (
-                        <div className="flex items-center gap-0.5 text-[10px] font-bold font-mono text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded-md">
-                          <Droplets size={10} />
+                        <div className="flex items-center gap-0.5 text-[10px] font-extrabold font-mono text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded-md border border-sky-100">
+                          <Droplets size={10} className="text-sky-500" />
                           <span>{day.precipitation}mm</span>
                         </div>
                       )}
-                      <div className="text-[11px] font-bold font-mono text-slate-800 leading-none">
-                        {day.tempMax}° / <span className="text-slate-400">{day.tempMin}°</span>
+                      <div className="text-[11px] font-extrabold font-mono text-slate-900 leading-none">
+                        {day.tempMax}° / <span className="text-slate-500 font-bold">{day.tempMin}°</span>
                       </div>
                     </div>
                   </div>
@@ -320,7 +343,7 @@ export default function WeatherForecast({
           </div>
 
           {/* Forecast Context notice */}
-          <div className="mt-4 pt-3.5 border-t border-[#EFE9E2]/60 text-[10px] text-slate-400 leading-normal font-sans">
+          <div className="mt-4 pt-3.5 border-t border-[#EFE9E2]/60 text-[10px] text-slate-700 leading-normal font-sans">
             {activeDayForecast && activeDayDetails ? (
               <span>
                 On <strong>{activeDayForecast.formattedDay} (Day {activeDayIndex + 1})</strong>, expect <strong>{activeDayDetails.label}</strong> with temperature highs of {activeDayForecast.tempMax}°C and {activeDayForecast.precipitation > 0 ? `around ${activeDayForecast.precipitation}mm of precipitation.` : 'no expected precipitation.'}

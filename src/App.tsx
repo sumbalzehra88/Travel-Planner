@@ -6,7 +6,7 @@ import TripDetailsView from './components/TripDetailsView';
 import NewTripModal from './components/NewTripModal';
 import ShowcaseView from './components/ShowcaseView';
 import AuthModal from './components/AuthModal';
-import { Menu, AlertCircle, Plus, Sparkles, Compass } from 'lucide-react';
+import { Menu, AlertCircle, Plus, Sparkles, Navigation } from 'lucide-react';
 
 export default function App() {
   // Authentication states
@@ -55,7 +55,7 @@ export default function App() {
       }
     } catch (err) {
       console.error('Error loading trips list:', err);
-      setGlobalError('Failed to load trips list from database.');
+      setGlobalError('Failed to load trips list.');
     } finally {
       setIsLoadingList(false);
     }
@@ -481,7 +481,7 @@ export default function App() {
           onClick={() => setView('showcase')}
           className="flex items-center gap-1.5 text-xs font-bold text-[#7A2E3A] bg-[#E8C4B8]/30 px-3.5 py-1.5 rounded-full"
         >
-          <Compass size={13} /> Explore
+          <Navigation size={13} /> Explore
         </button>
         <button
           id="menu-toggle-btn"
@@ -529,7 +529,7 @@ export default function App() {
         {isLoadingList ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-3">
             <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-xs text-slate-400 font-medium">Bootstrapping SQLite Workspace...</p>
+            <p className="text-xs text-slate-400 font-medium">Loading your travel workspace...</p>
           </div>
         ) : trips.length === 0 ? (
           /* Empty State Welcome Board */
@@ -540,7 +540,7 @@ export default function App() {
             <div className="space-y-2">
               <h1 className="text-2xl font-black text-slate-950 tracking-tight">Your Next Voyage Begins Here</h1>
               <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
-                Build daily schedules, map activities, and log real-time travel expenses securely in your local database. Create your first trip to unlock the suite!
+                Build daily schedules, map activities, and log real-time travel expenses securely in one place. Create your first trip to unlock the suite!
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center gap-3 justify-center">
@@ -549,14 +549,14 @@ export default function App() {
                 onClick={() => setIsNewTripModalOpen(true)}
                 className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:shadow-lg transition-all text-xs active:scale-[0.98]"
               >
-                <Compass size={14} />
+                <Navigation size={14} />
                 Plan My First Trip
               </button>
               <button
                 onClick={() => setView('showcase')}
                 className="inline-flex items-center gap-2 bg-[#FAF5F0] border border-[#EFE9E2] hover:bg-[#FAF5F0]/85 text-[#7A2E3A] font-semibold px-6 py-3 rounded-xl shadow-xs transition-all text-xs active:scale-[0.98]"
               >
-                <Compass size={14} />
+                <Navigation size={14} />
                 Browse Destinations
               </button>
             </div>

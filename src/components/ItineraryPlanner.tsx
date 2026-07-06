@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ItineraryItem, TripDetails } from '../types';
-import { Clock, Plus, Trash2, Edit2, AlertCircle, Sparkles, MapPin, AlignLeft, Calendar, Compass } from 'lucide-react';
+import { Clock, Plus, Trash2, Edit2, AlertCircle, Sparkles, MapPin, AlignLeft, Calendar, Navigation } from 'lucide-react';
 import WeatherForecast from './WeatherForecast';
 
 interface ItineraryPlannerProps {
@@ -178,21 +178,21 @@ export default function ItineraryPlanner({
                   handleCancel();
                 }}
                 className={`
-                  flex-shrink-0 px-4 py-2.5 rounded-xl text-left border transition-all duration-200 cursor-pointer
+                  flex-shrink-0 px-4 py-2.5 rounded-xl text-left border transition-all duration-300 cursor-pointer hover:scale-[1.01] active:scale-[0.99]
                 `}
                 style={isSelected ? {
-                  backgroundColor: themeAccentLight,
-                  borderColor: themeAccentBorder,
-                  color: themeAccent,
-                  boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.02)'
+                  background: 'linear-gradient(135deg, #7A2E3A, #60202B)', // Solid brand maroon gradient for the active day tab
+                  borderColor: '#7A2E3A',
+                  color: '#ffffff',
+                  boxShadow: '0 4px 12px rgba(122, 46, 58, 0.3)'
                 } : {
                   backgroundColor: '#ffffff',
                   borderColor: '#EFE9E2',
-                  color: '#64748b'
+                  color: '#475569'
                 }}
               >
-                <div className="text-[10px] font-bold uppercase tracking-wider opacity-85">{day.label}</div>
-                <div className="text-xs font-semibold mt-0.5 whitespace-nowrap">{day.formattedDate}</div>
+                <div className={`text-[10px] font-extrabold uppercase tracking-wider leading-none ${isSelected ? 'text-white/85' : 'text-slate-500'}`}>{day.label}</div>
+                <div className={`text-xs font-extrabold mt-1 whitespace-nowrap ${isSelected ? 'text-white' : 'text-slate-900'}`}>{day.formattedDate}</div>
               </button>
             );
           })}
@@ -216,56 +216,73 @@ export default function ItineraryPlanner({
         {/* Timeline Area */}
         <div className="lg:col-span-7 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+            <h2 className="text-sm font-extrabold text-slate-950 flex items-center gap-2">
               <Calendar size={15} style={{ color: themeAccent }} /> Itinerary for {days[activeDayIndex]?.formattedDate || `Day ${activeDayIndex + 1}`}
             </h2>
             {!isAdding && !editingItem && (
               <button
                 id="add-activity-btn"
                 onClick={handleStartAdd}
-                className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 border rounded-xl hover:brightness-95 active:scale-[0.98] transition-all cursor-pointer shadow-xs"
+                className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3.5 py-2 border rounded-xl hover:brightness-105 hover:scale-[1.01] active:scale-[0.98] transition-all cursor-pointer shadow-sm text-white"
                 style={{
-                  backgroundColor: themeAccentLight,
-                  color: themeAccent,
-                  borderColor: themeAccentBorder
+                  background: `linear-gradient(135deg, ${themeAccent}, ${themeAccent}dd)`,
+                  borderColor: themeAccent,
+                  boxShadow: `0 4px 10px ${themeAccent}25`
                 }}
               >
-                <Plus size={12} />
+                <Plus size={12} className="stroke-[3px]" />
                 Add Activity
               </button>
             )}
           </div>
 
           {activeDayItineraries.length === 0 ? (
-            <div className="bg-slate-50/50 border border-slate-100 rounded-2xl p-8 text-center">
+            <div className="bg-[#FAF1EC]/30 border border-[#EFE9E2] rounded-2xl p-8 text-center shadow-2xs">
               <span className="text-3xl block mb-2">🎈</span>
-              <p className="text-sm font-semibold text-slate-800">No activities scheduled yet</p>
-              <p className="text-xs text-slate-400 mt-1">Make the most of your trip! Click "Add Activity" to plan this day.</p>
+              <p className="text-sm font-extrabold text-slate-900">No activities scheduled yet</p>
+              <p className="text-xs text-slate-600 font-bold mt-1">Make the most of your trip! Click "Add Activity" to plan this day.</p>
             </div>
           ) : (
-            <div className="relative border-l border-slate-200/80 ml-4 pl-6 space-y-6 py-2">
+            <div className="relative ml-4 pl-6 space-y-6 py-2">
+              {/* Gradient connecting line */}
+              <div 
+                className="absolute left-0 top-3 bottom-3 w-[2px] rounded-full pointer-events-none"
+                style={{
+                  background: `linear-gradient(to bottom, ${themeAccent}, #7A2E3A, ${themeAccent}40)`
+                }}
+              />
+
               {activeDayItineraries.map((item) => (
                 <div key={item.id} className="relative group" id={`itinerary-item-${item.id}`}>
-                  {/* Timeline dot */}
+                  {/* Glowing Timeline dot */}
                   <span 
-                    className="absolute -left-[30px] top-1.5 border-2 border-white w-3 h-3 rounded-full shadow-sm group-hover:scale-110 transition-transform"
-                    style={{ backgroundColor: themeAccent }}
+                    className="absolute -left-[29px] top-1.5 border-2 border-white w-3.5 h-3.5 rounded-full shadow-sm group-hover:scale-125 transition-all duration-300 flex items-center justify-center"
+                    style={{ 
+                      backgroundColor: themeAccent,
+                      boxShadow: `0 0 8px 1.5px ${themeAccent}60`
+                    }}
                   ></span>
 
-                  <div className="bg-white border border-[#EFE9E2] hover:border-slate-300 p-4 rounded-xl shadow-xs transition-all duration-200">
+                  <div className="bg-white border border-[#EFE9E2] hover:border-slate-300 p-4 rounded-xl shadow-xs transition-all duration-300 hover:shadow-sm">
                     <div className="flex justify-between items-start gap-4">
                       {/* Left: Time and Activity */}
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-1 text-[10px] font-bold font-mono uppercase" style={{ color: themeAccent }}>
-                          <Clock size={11} />
+                      <div className="space-y-2">
+                        <div 
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-extrabold font-mono uppercase tracking-wider border text-white shadow-2xs leading-none"
+                          style={{ 
+                            backgroundColor: themeAccent,
+                            borderColor: themeAccent,
+                          }}
+                        >
+                          <Clock size={10} className="stroke-[2.5px]" />
                           {item.time}
                         </div>
-                        <h4 className="font-semibold text-sm text-slate-900 leading-snug">
+                        <h4 className="font-serif italic font-bold text-sm text-slate-950 leading-snug">
                           {item.activity}
                         </h4>
                         {item.notes && (
-                          <p className="text-xs text-slate-500 bg-slate-50/75 p-2 rounded-lg border border-slate-100/50 mt-1 flex items-start gap-1">
-                            <AlignLeft size={11} className="text-slate-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-xs text-slate-800 bg-[#FAF1EC]/50 p-2.5 rounded-lg border border-[#EFE9E2]/60 mt-2 flex items-start gap-1.5 font-medium leading-relaxed">
+                            <AlignLeft size={11} className="text-[#7A2E3A] mt-0.5 flex-shrink-0" />
                             <span className="whitespace-pre-line">{item.notes}</span>
                           </p>
                         )}
@@ -276,7 +293,7 @@ export default function ItineraryPlanner({
                         <button
                           id={`edit-activity-btn-${item.id}`}
                           onClick={() => handleStartEdit(item)}
-                          className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                          className="p-1.5 text-slate-500 hover:text-[#7A2E3A] hover:bg-[#FAF1EC]/50 rounded-lg transition-all"
                           title="Edit activity"
                         >
                           <Edit2 size={13} />
@@ -284,7 +301,7 @@ export default function ItineraryPlanner({
                         <button
                           id={`delete-activity-btn-${item.id}`}
                           onClick={() => handleDelete(item.id)}
-                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-lg transition-colors"
+                          className="p-1.5 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                           title="Delete activity"
                         >
                           <Trash2 size={13} />
@@ -419,16 +436,24 @@ export default function ItineraryPlanner({
             </div>
           ) : (
             <div 
-              className="border rounded-2xl p-5 text-center transition-all duration-300"
+              className="border rounded-[1.8rem] p-6 text-center transition-all duration-300 relative overflow-hidden shadow-sm flex flex-col items-center justify-center min-h-[220px]"
               style={{
-                backgroundColor: themeAccentLight,
-                borderColor: themeAccentBorder
+                background: `linear-gradient(135deg, ${themeBg}, ${themeAccentLight}50)`,
+                borderColor: themeAccent,
+                borderWidth: '1.5px',
+                boxShadow: `0 4px 20px -3px ${themeAccent}10`
               }}
             >
-              <Compass size={24} className="mx-auto mb-2.5" style={{ color: themeAccent }} />
-              <h4 className="font-bold text-[10px] text-slate-800 uppercase tracking-wider mb-1 font-sans">Dynamic Timeline</h4>
-              <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs mx-auto">
-                Schedule your itinerary day-by-day. Select a day tab above to plan specific schedules, flights, visits, or relaxation slots.
+              {/* Ambient decoration glow */}
+              <div 
+                className="absolute -left-12 -bottom-12 w-24 h-24 rounded-full blur-2xl opacity-15 pointer-events-none" 
+                style={{ backgroundColor: themeAccent }}
+              />
+
+              <Navigation size={40} className="mb-4 text-[#7A2E3A]" style={{ color: themeAccent }} />
+              <h4 className="font-serif italic font-extrabold text-sm text-slate-900 tracking-tight mb-2">Dynamic Timeline</h4>
+              <p className="text-xs text-slate-700 font-semibold leading-relaxed max-w-xs mx-auto">
+                Schedule your itinerary day-by-day. Select a day tab above to plan specific schedules, flights, scenic visits, or relaxation slots.
               </p>
             </div>
           )}

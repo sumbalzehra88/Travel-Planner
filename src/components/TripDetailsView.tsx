@@ -135,21 +135,27 @@ export default function TripDetailsView({
       <div id="trip-header-card" className="bg-[#FCFAF8] border border-[#EFE9E2] rounded-[1.8rem] p-6 md:p-8 shadow-xs relative overflow-hidden transition-all duration-300">
         {/* Subtle decorative color bar */}
         <div 
-          className="absolute top-0 left-0 right-0 h-1.5 transition-all duration-500" 
+          className="absolute top-0 left-0 right-0 h-1.5 transition-all duration-500 z-10" 
           style={{ backgroundColor: themeAccent }}
+        />
+        {/* Ambient gradient fade expanding downward */}
+        <div 
+          className="absolute top-0 left-0 right-0 h-20 pointer-events-none opacity-[0.06] transition-all duration-500"
+          style={{
+            background: `linear-gradient(to bottom, ${themeAccent}, transparent)`
+          }}
         />
 
         {!isEditingTrip ? (
-          <div className="space-y-6">
+          <div className="space-y-6 relative z-10">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <span 
-                    className="px-2.5 py-1 rounded-lg border font-mono text-[10px] font-bold tracking-wider uppercase transition-colors duration-500"
+                    className="px-3 py-1 rounded-full font-mono text-[9px] font-extrabold tracking-wider uppercase transition-all duration-300 shadow-2xs border text-white"
                     style={{
-                      backgroundColor: themeAccentLight,
-                      color: themeAccent,
-                      borderColor: themeAccentBorder,
+                      backgroundColor: '#7A2E3A', // Bolder brand-colored maroon
+                      borderColor: '#7A2E3A',
                     }}
                   >
                     ACTIVE TRIP PLAN
@@ -167,7 +173,7 @@ export default function TripDetailsView({
                   )}
                 </div>
 
-                <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-slate-500 font-medium font-sans">
+                <div className="flex flex-wrap gap-x-5 gap-y-1.5 text-xs text-slate-700 font-bold font-sans">
                   <div className="flex items-center gap-1.5">
                     <MapPin size={14} className="flex-shrink-0 transition-colors duration-500" style={accentTextStyle} />
                     <span>{trip.destination}</span>
@@ -184,7 +190,7 @@ export default function TripDetailsView({
               <button
                 id="edit-trip-details-btn"
                 onClick={() => setIsEditingTrip(true)}
-                className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-600 hover:text-slate-800 hover:bg-[#F5EFEB] border border-[#EFE9E2] hover:border-slate-300 px-3.5 py-2.5 rounded-xl transition-all shadow-xs flex-shrink-0 cursor-pointer"
+                className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-700 hover:text-[#7A2E3A] hover:bg-[#FAF1EC] border border-[#EFE9E2] hover:border-[#D8A9A0] px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md flex-shrink-0 cursor-pointer"
               >
                 <Edit2 size={13} />
                 Edit Details
@@ -194,26 +200,34 @@ export default function TripDetailsView({
             {/* Historical Site & AI Trivia Banner */}
             {(trip.theme_site_name || trip.theme_trivia) && (
               <div 
-                className="border rounded-2xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all duration-500"
+                className="border rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all duration-500 relative overflow-hidden shadow-sm"
                 style={{
-                  backgroundColor: themeBg,
-                  borderColor: themeAccentBorder,
+                  background: `linear-gradient(135deg, ${themeBg}, ${themeAccentLight}50)`,
+                  borderColor: themeAccent,
+                  borderWidth: '1.5px',
+                  boxShadow: `0 4px 20px -3px ${themeAccent}15`
                 }}
               >
-                <div className="space-y-1.5 flex-1">
+                {/* Highlight glow accent */}
+                <div 
+                  className="absolute -right-16 -top-16 w-32 h-32 rounded-full blur-2xl opacity-15 pointer-events-none" 
+                  style={{ backgroundColor: themeAccent }}
+                />
+
+                <div className="space-y-1.5 flex-1 relative z-10">
                   <div className="flex flex-wrap items-center gap-2 font-bold text-xs" style={accentTextStyle}>
                     <Landmark size={14} style={accentTextStyle} />
                     <span>{trip.theme_site_name || 'Historical Center'}</span>
                     {trip.theme_tagline && (
                       <>
                         <span className="text-slate-300">|</span>
-                        <span className="text-slate-500 font-semibold italic">{trip.theme_tagline}</span>
+                        <span className="text-slate-700 font-extrabold italic">{trip.theme_tagline}</span>
                       </>
                     )}
                   </div>
                   {trip.theme_trivia && (
-                    <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
-                      <span className="font-semibold text-slate-700">Did you know?</span> {trip.theme_trivia}
+                    <p className="text-xs text-slate-800 font-medium leading-relaxed max-w-3xl">
+                      <span className="font-extrabold text-[#7A2E3A]">Did you know?</span> {trip.theme_trivia}
                     </p>
                   )}
                 </div>
@@ -224,11 +238,12 @@ export default function TripDetailsView({
                     type="button"
                     disabled={isRegenerating}
                     onClick={handleRefreshTheme}
-                    className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-3 py-2 rounded-xl border hover:brightness-95 active:scale-[0.98] transition-all flex-shrink-0 shadow-xs cursor-pointer"
+                    className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-4 py-2.5 rounded-xl border hover:brightness-110 hover:scale-[1.03] active:scale-[0.98] transition-all flex-shrink-0 cursor-pointer relative z-10"
                     style={{
-                      backgroundColor: themeAccent,
+                      background: `linear-gradient(135deg, ${themeAccent}, ${themeAccent}dd)`,
                       color: '#ffffff',
                       borderColor: themeAccent,
+                      boxShadow: `0 4px 12px ${themeAccent}40`
                     }}
                   >
                     <Sparkles size={11} className={isRegenerating ? 'animate-spin' : ''} />
