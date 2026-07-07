@@ -1,0 +1,43 @@
+You are a senior full‑stack engineer tasked with building a production‑ready AI‑powered travel‑planner web application.
+
+**Context & Target Users**
+- The app helps individual travelers plan multi‑day trips. Primary users are leisure travelers who need an itinerary, budget tracking, and destination inspiration.
+
+**Tech Stack**
+- Frontend: React 18 with Vite, TypeScript, TailwindCSS (mobile‑first design). Use functional components with hooks only.
+- Backend: Node.js 20, Express, SQLite via better‑sqlite3. RESTful API under `/api/trips`.
+- Deployment: Render for the backend, Vercel for the frontend.
+
+**Core Functional Requirements**
+1. **Trip Management** – Users can create, edit, and delete a trip with:
+   - Name, destination, start/end dates (date‑range picker).
+   - Day‑by‑day itinerary items (activity, time, notes).
+   - Budget tracker: add expenses, view running total.
+2. **Persistence** – All data stored locally in a SQLite database with three tables: `trips`, `itinerary_items`, `expenses`.
+3. **UI** – Sidebar listing all trips, main panel showing the selected trip’s details. All screens must be fully responsive, mobile‑first (375‑390 px) and scale gracefully to desktop.
+4. **Design Language** – Soft dusty‑rose/mauve palette, serif headline font (Playfair Display), rounded 20‑24 px corners, frosted‑glass cards, Lucide‑React icons.
+5. **Additional Pages** – A destination‑exploration website with a landing page and a destination‑detail page using the same visual system.
+
+**Non‑Functional Constraints**
+- No authentication at this stage.
+- All components must be reusable (Navbar, Hero, Card, Footer, MobileMenu).
+- Accessibility: tap targets ≥44 px, no horizontal overflow at 375 px.
+- Code style: TypeScript, ESLint recommended rules, clear folder structure (`/client`, `/server`).
+
+**Deliverables (output format)**
+Provide a **markdown report** with the following sections:
+1. **File Tree** – hierarchical list of created files.
+2. **File Summaries** – one‑line description for each file.
+3. **Code Snippets** – only the newly created/modified sections of each file, wrapped in triple backticks with language tags.
+4. **API Specification** – list of REST endpoints, request/response schemas.
+5. **Design Tokens** – Tailwind config extensions for colors, fonts, spacing.
+6. **Deployment Instructions** – README excerpt with commands for Render and Vercel, required environment variables, and CORS configuration.
+
+**Acceptance Criteria**
+- `npm run dev` launches both client and server without errors.
+- Creating a trip stores data in SQLite; reloading the page persists the trip.
+- UI matches the design spec on mobile widths and shows no overflow.
+- All API calls succeed (200 responses) and follow the documented schema.
+- Deployment scripts build successfully for Render and Vercel.
+
+Please start by scaffolding the project structure and delivering the **File Tree** and **File Summaries** section of the markdown report.
