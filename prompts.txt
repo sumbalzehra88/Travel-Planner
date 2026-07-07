@@ -1,0 +1,298 @@
+# Cursor Prompt Reference — Travel App & Website Build
+
+A collection of prompts used to build a travel planner app and a travel destination website in Cursor, organized by type.
+
+---
+
+## 1. System/Setup Prompt
+*Establishes the AI's role, tech stack, feature scope, and structural rules before any code is written.*
+
+```
+You are an expert full-stack engineer. Build a fully-featured travel 
+planner web app using React + Vite + TailwindCSS for the frontend and 
+Node/Express for the backend.
+
+Core features:
+- Users can create a trip with a name, destination, and date range
+- Add a day-by-day itinerary with activities, times, and notes
+- A simple budget tracker per trip (add expenses, see running total)
+- Trips are saved to a local SQLite database (use better-sqlite3)
+- Clean, mobile-responsive UI with a sidebar listing all trips
+
+Rules:
+- Use functional React components with hooks, no class components
+- Keep API routes RESTful under /api/trips
+- Write clear file/folder structure: /client and /server
+- Don't add authentication yet — that comes later
+- After scaffolding, list every file you created and a one-line 
+  summary of what it does
+
+Start by scaffolding the project structure and the basic UI shell 
+(sidebar + main panel), without wiring up the backend yet.
+```
+
+---
+
+## 2. UI-First Prompt
+*Builds and verifies the visual/interactive layer using mock data before touching any backend logic.*
+
+```
+Now build out the "Create Trip" form and the "Trip Detail" view with 
+placeholder/mock data. I want to see the full UI working end-to-end 
+before we touch the backend.
+```
+
+---
+
+## 3. API/Backend Connection Prompt
+*Wires up real data — database schema and REST endpoints — replacing the mock data from step 2.*
+
+```
+Now wire up the Express backend: create the SQLite schema for trips, 
+itinerary items, and expenses. Implement the REST endpoints and 
+replace the mock data in the frontend with real API calls using fetch. 
+Show me the updated files only, don't repeat unchanged code.
+```
+
+---
+
+## 4. Debug Loop Prompt
+*Directs the AI agent to self-diagnose and fix issues using terminal/console output rather than guessing.*
+
+```
+Run the dev server and fix any errors you encounter. If a request 
+fails, check the terminal logs and the browser console output before 
+guessing at the fix. Keep iterating until the app runs without errors 
+on npm run dev.
+```
+
+---
+
+## 5. Deployment Prompt
+*Prepares the finished build for production — configs, docs, and environment setup for shipping live.*
+
+```
+Prepare this for deployment on Render (backend) and Vercel (frontend). 
+Add a README with setup instructions, environment variables needed, 
+and a build script. Double-check CORS settings so the deployed 
+frontend can talk to the deployed backend.
+```
+
+---
+
+## 6. Visual/Design Reference Prompt (Mobile App UI)
+*Translates a reference screenshot into a detailed design + component spec for an AI coding agent.*
+
+```
+Build a mobile-first travel app UI (React + TailwindCSS) with two screens: 
+a "Destination Landing" screen and a "Destination Detail" screen. Match this 
+visual style exactly:
+
+DESIGN LANGUAGE:
+- Soft dusty-rose / mauve / blush pink color palette (#D8A9A0, #E8C4B8, 
+  #7A2E3A for accents, deep maroon for CTA buttons)
+- Large full-bleed illustrated/AI-art hero image as the background of the 
+  top 60% of the screen (fantasy/storybook illustration style, warm golden 
+  hour lighting, watercolor-ish texture)
+- Rounded corners everywhere — 24px+ radius on cards, buttons, and the 
+  phone frame itself
+- Serif display font for city names/headlines (elegant, editorial feel — 
+  like Playfair Display), clean sans-serif for body text
+- Soft drop shadows, semi-transparent frosted-glass cards (backdrop-blur) 
+  floating over the hero image
+- Small circular icon buttons (back arrow, heart/favorite) top corners, 
+  semi-transparent white background
+
+SCREEN 1 — Destination Landing:
+- Hero illustration of the destination (skyline/landmark)
+- City name in large serif type top-left, with a short poetic tagline 
+  below it (e.g. "Where East Meets Timeless Beauty")
+- Small bookmark/landmark icon button top-right
+- Floating card at the bottom with: a short descriptive heading, 1-2 line 
+  description, and a circular arrow button (maroon, white arrow icon) to 
+  proceed
+- Bottom navigation bar: floating pill-shaped bar with 4 icons (home, 
+  explore/map pin, favorites/heart, profile), rounded, dark mauve background, 
+  active icon highlighted in a small circle
+
+SCREEN 2 — Destination Detail:
+- Same hero illustration style, different landmark/angle
+- Back arrow top-left, heart/favorite icon top-right (both circular glass 
+  buttons)
+- Headline + subheading over the image (e.g. "Timeless Istanbul" / "Live 
+  the magic of two continents in one city")
+- Bottom card titled "Explore Experiences" with 3 small square rounded 
+  thumbnail icons in a row (e.g. Landmarks, Local Flavors, Bosphorus Tour), 
+  each with a label underneath
+- Full-width maroon "Start Exploring" button with arrow icon, below the 
+  thumbnails
+- Small "more options" circular button bottom-right corner
+
+TECHNICAL:
+- Use placeholder <img> tags with descriptive alt text for hero images 
+  (I'll swap in real assets later)
+- Use lucide-react icons for all icon buttons
+- Make it responsive but designed primarily for a mobile viewport (390px 
+  wide phone frame)
+- Component-ize the bottom nav and the floating cards so they're reusable 
+  across screens
+
+Build Screen 1 first, get the layout and styling right, then duplicate 
+the pattern for Screen 2.
+```
+
+---
+
+## 7. Platform Pivot Prompt (App → Website)
+*Adapts the same visual design system from a mobile app frame into a full desktop website layout.*
+
+```
+Build a travel destination website (React + TailwindCSS) with a landing 
+page and a destination detail page. Match this visual style:
+
+DESIGN LANGUAGE:
+- Soft dusty-rose / mauve / blush pink palette (#D8A9A0, #E8C4B8 backgrounds, 
+  #7A2E3A deep maroon for accents and CTAs)
+- Large full-bleed illustrated hero section (fantasy/storybook AI-art style, 
+  warm golden-hour lighting, watercolor texture) taking up the full viewport 
+  height on first load
+- Serif display font for headlines (elegant, editorial — like Playfair 
+  Display), clean sans-serif for body copy
+- Rounded corners (20-24px) on cards, buttons, and image containers
+- Frosted-glass (backdrop-blur) semi-transparent cards floating over hero 
+  imagery
+- Soft, warm drop shadows throughout
+- Circular icon buttons for nav actions (favorite, menu, search)
+
+PAGE 1 — Homepage/Landing:
+- Sticky top navbar: logo left, nav links center (Destinations, Experiences, 
+  About, Contact), circular profile/favorite icons right — semi-transparent 
+  glass background that becomes solid on scroll
+- Full-width hero section: large illustrated cityscape background, city name 
+  in huge serif type, poetic tagline below, a floating glass card 
+  bottom-left with a short description and a maroon circular "arrow" CTA 
+  button
+- Below the fold: a horizontal scrolling or grid section of "Explore 
+  Destinations" — rounded thumbnail cards with city images + names
+- A second section "Explore Experiences" — 3-4 column grid of rounded 
+  square cards (Landmarks, Local Flavors, Tours, etc.) with icon + label
+- Footer: soft mauve background, simple link columns, social icons
+
+PAGE 2 — Destination Detail Page:
+- Full-width hero banner (different landmark illustration), headline + 
+  subheading overlaid, back button and favorite icon as floating glass 
+  buttons top corners
+- Below hero: two-column layout — left column has descriptive text about 
+  the destination, right column has a floating glass card with quick facts 
+  (best time to visit, currency, language)
+- "Explore Experiences" row of 3 rounded thumbnail cards, same style as 
+  homepage
+- Full-width maroon "Start Exploring" / "Plan Your Trip" button with arrow 
+  icon
+- Optional: a photo gallery grid section below with rounded-corner images
+
+TECHNICAL:
+- Fully responsive: desktop grid layouts collapse to stacked mobile layouts 
+  at sm/md breakpoints
+- Use placeholder <img> tags with descriptive alt text for all hero/gallery 
+  images (I'll swap in real assets later)
+- Use lucide-react icons for nav/UI icons
+- Google Fonts import for Playfair Display (or similar) for headlines
+- Component-ize: Navbar, Hero, DestinationCard, ExperienceCard, Footer — 
+  so they're reusable across pages
+- Add subtle scroll-triggered fade-in animations on section reveals
+
+Build the homepage first, get the hero + navbar + card grids right, then 
+build the destination detail page reusing the same components.
+```
+
+---
+
+## 8. Constraint-Refinement Prompt (Mobile Responsiveness) — FINAL VERSION
+*Adds an explicit, non-negotiable requirement (mobile-first responsiveness) on top of the existing design spec. This is the most complete/final version of the website prompt.*
+
+```
+Build a fully mobile-responsive travel destination website (React + 
+TailwindCSS, Next.js preferred for routing) with a landing page and a 
+destination detail page. Match this visual style:
+
+DESIGN LANGUAGE:
+- Soft dusty-rose / mauve / blush pink palette (#D8A9A0, #E8C4B8 backgrounds, 
+  #7A2E3A deep maroon for accents and CTAs)
+- Large full-bleed illustrated hero section (fantasy/storybook AI-art style, 
+  warm golden-hour lighting, watercolor texture)
+- Serif display font for headlines (elegant, editorial — like Playfair 
+  Display), clean sans-serif for body copy
+- Rounded corners (20-24px) on cards, buttons, and image containers
+- Frosted-glass (backdrop-blur) semi-transparent cards floating over hero 
+  imagery
+- Soft, warm drop shadows throughout
+- Circular icon buttons for nav actions (favorite, menu, search)
+
+RESPONSIVE REQUIREMENTS (critical — build mobile-first, then scale up):
+- Design and code mobile layout FIRST (375-390px viewport), then use 
+  Tailwind's sm:/md:/lg:/xl: breakpoints to enhance for tablet and desktop
+- Navbar: hamburger menu on mobile that opens a full-screen or slide-in 
+  glass panel with nav links; full horizontal nav bar on md: and above
+- Hero section: text and floating CTA card stack vertically and center 
+  on mobile; on desktop they can sit side-by-side or bottom-left as 
+  originally designed
+- Card grids (Destinations, Experiences): single column on mobile, 
+  2 columns on sm/md, 3-4 columns on lg/xl — use CSS grid with 
+  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 etc.
+- Font sizes must scale down appropriately on mobile (use responsive 
+  text classes like text-3xl md:text-5xl lg:text-6xl) — no text overflow 
+  or overlap on small screens
+- Images/hero illustrations must use object-cover and maintain aspect 
+  ratio without distortion at any screen width
+- Buttons and tap targets must be at least 44px tall on mobile for 
+  touch accessibility
+- Two-column detail page layout (description + quick-facts card) must 
+  stack into a single column on mobile
+- Test and ensure no horizontal scroll/overflow at 375px width
+
+PAGE 1 — Homepage/Landing:
+- Sticky navbar: logo left, nav links center (Destinations, Experiences, 
+  About, Contact) collapsing to hamburger on mobile, circular profile/
+  favorite icons right — glass background, solid on scroll
+- Full-width hero: illustrated cityscape background, city name in large 
+  serif type, poetic tagline, floating glass card with description and 
+  maroon circular arrow CTA — centered/stacked on mobile
+- "Explore Destinations" section: responsive card grid as described above
+- "Explore Experiences" section: responsive icon-card grid
+- Footer: mauve background, link columns that stack on mobile, social icons
+
+PAGE 2 — Destination Detail Page:
+- Full-width hero banner, headline + subheading overlaid, floating glass 
+  back/favorite buttons top corners
+- Two-column layout (description + quick facts) that stacks on mobile
+- "Explore Experiences" row — horizontally scrollable on mobile if needed, 
+  grid on desktop
+- Full-width "Start Exploring" maroon button (full width on mobile, 
+  auto-width on desktop)
+
+TECHNICAL:
+- Use placeholder <img> tags with descriptive alt text (real assets later)
+- lucide-react icons throughout
+- Google Fonts import for Playfair Display or similar
+- Component-ize: Navbar, MobileMenu, Hero, DestinationCard, ExperienceCard, 
+  Footer
+- Add subtle scroll-triggered fade-in animations (keep them lightweight 
+  so they don't hurt mobile performance)
+
+Build the homepage first at mobile width, verify it looks correct, then 
+expand to tablet/desktop breakpoints. Then repeat for the destination 
+detail page.
+```
+
+---
+
+## 9. QA/Verification Prompt
+*A quick follow-up to catch responsive design bugs after the build is complete.*
+
+```
+Check this at 375px width and fix any overflow or cramped spacing.
+```
+
+---
+
